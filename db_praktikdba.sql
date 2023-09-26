@@ -31,6 +31,7 @@ CREATE TABLE `tb_barang` (
   `kode_barang` varchar(50) NOT NULL,
   `nama_barang` varchar(255) DEFAULT NULL,
   `warna` varchar(100) DEFAULT NULL,
+  `satuan` varchar(50) DEFAULT NULL,
   `kode_kategori` varchar(5) DEFAULT NULL,
   `stok` int(11) DEFAULT NULL,
   `harga_beli` int(11) DEFAULT NULL,

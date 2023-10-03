@@ -2,10 +2,10 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost
--- Generation Time: Oct 03, 2023 at 08:05 AM
--- Server version: 5.7.24
--- PHP Version: 7.2.19
+-- Host: localhost:3306
+-- Generation Time: Oct 03, 2023 at 01:23 PM
+-- Server version: 8.0.30
+-- PHP Version: 8.1.10
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -28,17 +28,17 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `tb_barang` (
-  `kode_barang` varchar(50) NOT NULL,
-  `nama_barang` varchar(255) DEFAULT NULL,
-  `warna` varchar(100) DEFAULT NULL,
-  `kode_kategori` varchar(5) DEFAULT NULL,
-  `satuan` varchar(50) DEFAULT NULL,
-  `stok` int(11) DEFAULT NULL,
-  `harga_beli` int(11) DEFAULT NULL,
-  `harga_jual` int(11) DEFAULT NULL,
-  `profit` int(11) DEFAULT NULL,
+  `kode_barang` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
+  `nama_barang` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `warna` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `kode_kategori` varchar(5) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `satuan` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `stok` int DEFAULT NULL,
+  `harga_beli` int DEFAULT NULL,
+  `harga_jual` int DEFAULT NULL,
+  `profit` int DEFAULT NULL,
   `tgl_input` date DEFAULT NULL,
-  `pengguna` int(11) DEFAULT NULL
+  `pengguna` int DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -63,10 +63,10 @@ INSERT INTO `tb_barang` (`kode_barang`, `nama_barang`, `warna`, `kode_kategori`,
 --
 
 CREATE TABLE `tb_kategori` (
-  `kode_kategori` varchar(30) NOT NULL,
-  `nama_kategori` varchar(50) DEFAULT NULL,
+  `kode_kategori` varchar(30) COLLATE utf8mb4_general_ci NOT NULL,
+  `nama_kategori` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
   `tgl_input` date DEFAULT NULL,
-  `pengguna` int(11) DEFAULT NULL
+  `pengguna` int DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -89,13 +89,13 @@ INSERT INTO `tb_kategori` (`kode_kategori`, `nama_kategori`, `tgl_input`, `pengg
 --
 
 CREATE TABLE `tb_pelanggan` (
-  `kode_pelanggan` int(11) NOT NULL,
-  `nama` varchar(100) DEFAULT NULL,
-  `alamat` text,
-  `telepon` varchar(15) DEFAULT NULL,
-  `email` varchar(50) DEFAULT NULL,
+  `kode_pelanggan` int NOT NULL,
+  `nama` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `alamat` text COLLATE utf8mb4_general_ci,
+  `telepon` varchar(15) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `email` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
   `tgl_input` date DEFAULT NULL,
-  `pengguna` int(11) DEFAULT NULL
+  `pengguna` int DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -114,11 +114,11 @@ INSERT INTO `tb_pelanggan` (`kode_pelanggan`, `nama`, `alamat`, `telepon`, `emai
 --
 
 CREATE TABLE `tb_pembelian_detail` (
-  `id` int(11) NOT NULL,
+  `id` int NOT NULL,
   `tgl` date DEFAULT NULL,
-  `kode_barang` varchar(50) DEFAULT NULL,
-  `jumlah` int(11) DEFAULT NULL,
-  `pengguna` int(11) DEFAULT NULL
+  `kode_barang` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `jumlah` int DEFAULT NULL,
+  `pengguna` int DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -136,14 +136,14 @@ INSERT INTO `tb_pembelian_detail` (`id`, `tgl`, `kode_barang`, `jumlah`, `penggu
 --
 
 CREATE TABLE `tb_pengguna` (
-  `id` int(11) NOT NULL,
-  `nama` varchar(50) NOT NULL,
-  `username` varchar(100) DEFAULT NULL,
-  `password` varchar(100) DEFAULT NULL,
-  `level` varchar(20) DEFAULT NULL,
-  `foto` varchar(255) DEFAULT NULL,
+  `id` int NOT NULL,
+  `nama` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
+  `username` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `password` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `level` varchar(20) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `foto` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
   `tgl_input` date DEFAULT NULL,
-  `pengguna` int(11) DEFAULT NULL
+  `pengguna` int DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -161,15 +161,15 @@ INSERT INTO `tb_pengguna` (`id`, `nama`, `username`, `password`, `level`, `foto`
 --
 
 CREATE TABLE `tb_penjualan` (
-  `kode_penjualan` varchar(50) NOT NULL,
+  `kode_penjualan` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
   `tgl_penjualan` date DEFAULT NULL,
-  `id_pelanggan` int(11) DEFAULT NULL,
-  `bayar` int(11) DEFAULT NULL,
-  `kembali` int(11) DEFAULT NULL,
-  `diskon` int(11) DEFAULT NULL,
-  `potongan` int(11) DEFAULT NULL,
-  `total_b` int(11) DEFAULT NULL,
-  `pengguna` int(11) DEFAULT NULL
+  `id_pelanggan` int DEFAULT NULL,
+  `bayar` int DEFAULT NULL,
+  `kembali` int DEFAULT NULL,
+  `diskon` int DEFAULT NULL,
+  `potongan` int DEFAULT NULL,
+  `total_b` int DEFAULT NULL,
+  `pengguna` int DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -188,11 +188,11 @@ INSERT INTO `tb_penjualan` (`kode_penjualan`, `tgl_penjualan`, `id_pelanggan`, `
 --
 
 CREATE TABLE `tb_penjualan_detail` (
-  `id` int(11) NOT NULL,
-  `kode_penjualan` varchar(20) DEFAULT NULL,
-  `kode_bareng` varchar(50) DEFAULT NULL,
-  `jumlah` int(11) DEFAULT NULL,
-  `total` int(11) DEFAULT NULL
+  `id` int NOT NULL,
+  `kode_penjualan` varchar(20) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `kode_bareng` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `jumlah` int DEFAULT NULL,
+  `total` int DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -261,19 +261,19 @@ ALTER TABLE `tb_penjualan_detail`
 -- AUTO_INCREMENT for table `tb_pembelian_detail`
 --
 ALTER TABLE `tb_pembelian_detail`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `tb_pengguna`
 --
 ALTER TABLE `tb_pengguna`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `tb_penjualan_detail`
 --
 ALTER TABLE `tb_penjualan_detail`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=84;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=84;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

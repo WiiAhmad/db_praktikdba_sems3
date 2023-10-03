@@ -39,7 +39,7 @@ CREATE TABLE `tb_barang` (
   `profit` int(11) DEFAULT NULL,
   `tgl_input` date DEFAULT NULL,
   `pengguna` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `tb_barang`
@@ -67,7 +67,7 @@ CREATE TABLE `tb_kategori` (
   `nama_kategori` varchar(50) DEFAULT NULL,
   `tgl_input` date DEFAULT NULL,
   `pengguna` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `tb_kategori`
@@ -96,7 +96,7 @@ CREATE TABLE `tb_pelanggan` (
   `email` varchar(50) DEFAULT NULL,
   `tgl_input` date DEFAULT NULL,
   `pengguna` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `tb_pelanggan`
@@ -119,7 +119,7 @@ CREATE TABLE `tb_pembelian_detail` (
   `kode_barang` varchar(50) DEFAULT NULL,
   `jumlah` int(11) DEFAULT NULL,
   `pengguna` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `tb_pembelian_detail`
@@ -144,7 +144,7 @@ CREATE TABLE `tb_pengguna` (
   `foto` varchar(255) DEFAULT NULL,
   `tgl_input` date DEFAULT NULL,
   `pengguna` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `tb_pengguna`
@@ -170,7 +170,7 @@ CREATE TABLE `tb_penjualan` (
   `potongan` int(11) DEFAULT NULL,
   `total_b` int(11) DEFAULT NULL,
   `pengguna` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `tb_penjualan`
@@ -193,7 +193,7 @@ CREATE TABLE `tb_penjualan_detail` (
   `kode_bareng` varchar(50) DEFAULT NULL,
   `jumlah` int(11) DEFAULT NULL,
   `total` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `tb_penjualan_detail`

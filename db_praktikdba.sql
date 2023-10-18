@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Oct 03, 2023 at 01:23 PM
+-- Generation Time: Oct 18, 2023 at 03:19 AM
 -- Server version: 8.0.30
 -- PHP Version: 8.1.10
 
@@ -207,6 +207,51 @@ INSERT INTO `tb_penjualan_detail` (`id`, `kode_penjualan`, `kode_bareng`, `jumla
 (82, 'PJ-00000005', 'B0001', 2, 50000),
 (83, 'PJ-00000006', 'B0002', 1, 23000);
 
+-- --------------------------------------------------------
+
+--
+-- Stand-in structure for view `view_3tabel`
+-- (See below for the actual view)
+--
+CREATE TABLE `view_3tabel` (
+`nama_barang` varchar(255)
+,`harga_beli` int(11)
+,`nama_kategori` varchar(50)
+,`stok` int(11)
+,`nama` varchar(50)
+);
+
+-- --------------------------------------------------------
+
+--
+-- Stand-in structure for view `view_barangkategori`
+-- (See below for the actual view)
+--
+CREATE TABLE `view_barangkategori` (
+`nama_barang` varchar(255)
+,`harga_beli` int(11)
+,`nama_kategori` varchar(50)
+,`stok` int(11)
+);
+
+-- --------------------------------------------------------
+
+--
+-- Structure for view `view_3tabel`
+--
+DROP TABLE IF EXISTS `view_3tabel`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `view_3tabel`  AS SELECT `tb_barang`.`nama_barang` AS `nama_barang`, `tb_barang`.`harga_beli` AS `harga_beli`, `tb_kategori`.`nama_kategori` AS `nama_kategori`, `tb_barang`.`stok` AS `stok`, `tb_pengguna`.`nama` AS `nama` FROM ((`tb_barang` join `tb_kategori`) join `tb_pengguna`) WHERE ((`tb_barang`.`kode_kategori` = `tb_kategori`.`kode_kategori`) AND (`tb_barang`.`pengguna` = `tb_pengguna`.`id`)) ;
+
+-- --------------------------------------------------------
+
+--
+-- Structure for view `view_barangkategori`
+--
+DROP TABLE IF EXISTS `view_barangkategori`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `view_barangkategori`  AS SELECT `tb_barang`.`nama_barang` AS `nama_barang`, `tb_barang`.`harga_beli` AS `harga_beli`, `tb_kategori`.`nama_kategori` AS `nama_kategori`, `tb_barang`.`stok` AS `stok` FROM (`tb_barang` join `tb_kategori`) WHERE (`tb_barang`.`kode_kategori` = `tb_kategori`.`kode_kategori`) ;
+
 --
 -- Indexes for dumped tables
 --
@@ -216,6 +261,8 @@ INSERT INTO `tb_penjualan_detail` (`id`, `kode_penjualan`, `kode_bareng`, `jumla
 --
 ALTER TABLE `tb_barang`
   ADD PRIMARY KEY (`kode_barang`);
+  ADD KEY `fkbarang1` (`kode_kategori`),
+  ADD KEY `pengguna` (`pengguna`);
 
 --
 -- Indexes for table `tb_kategori`
@@ -261,19 +308,30 @@ ALTER TABLE `tb_penjualan_detail`
 -- AUTO_INCREMENT for table `tb_pembelian_detail`
 --
 ALTER TABLE `tb_pembelian_detail`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `tb_pengguna`
 --
 ALTER TABLE `tb_pengguna`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `tb_penjualan_detail`
 --
 ALTER TABLE `tb_penjualan_detail`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=84;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=84;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `tb_barang`
+--
+ALTER TABLE `tb_barang`
+  ADD CONSTRAINT `fkbarang1` FOREIGN KEY (`kode_kategori`) REFERENCES `tb_kategori` (`kode_kategori`),
+  ADD CONSTRAINT `tb_barang_ibfk_1` FOREIGN KEY (`pengguna`) REFERENCES `tb_pengguna` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

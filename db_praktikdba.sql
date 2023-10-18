@@ -260,7 +260,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 -- Indexes for table `tb_barang`
 --
 ALTER TABLE `tb_barang`
-  ADD PRIMARY KEY (`kode_barang`);
+  ADD PRIMARY KEY (`kode_barang`),
   ADD KEY `fkbarang1` (`kode_kategori`),
   ADD KEY `pengguna` (`pengguna`);
 

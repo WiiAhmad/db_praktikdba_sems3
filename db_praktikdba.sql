@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `db_praktikdba`
+-- Database: `dbti2_satria`
 --
 
 -- --------------------------------------------------------
@@ -28,18 +28,18 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `tb_barang` (
-  `kode_barang` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
-  `nama_barang` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `warna` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `kode_kategori` varchar(5) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `satuan` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `kode_barang` varchar(50) NOT NULL,
+  `nama_barang` varchar(255) DEFAULT NULL,
+  `warna` varchar(100) DEFAULT NULL,
+  `kode_kategori` varchar(5) DEFAULT NULL,
+  `satuan` varchar(50) DEFAULT NULL,
   `stok` int(11) DEFAULT NULL,
   `harga_beli` int(11) DEFAULT NULL,
-  `harga_jual` int(11) DEFAULT NULL,
+  `harga_jual` int(11) NOT NULL,
   `profit` int(11) DEFAULT NULL,
   `tgl_input` date DEFAULT NULL,
   `pengguna` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `tb_barang`
@@ -63,24 +63,24 @@ INSERT INTO `tb_barang` (`kode_barang`, `nama_barang`, `warna`, `kode_kategori`,
 --
 
 CREATE TABLE `tb_kategori` (
-  `kode_kategori` varchar(30) COLLATE utf8mb4_general_ci NOT NULL,
-  `nama_kategori` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `kode_kategori` varchar(30) NOT NULL,
+  `nama_kategori` varchar(50) DEFAULT NULL,
   `tgl_input` date DEFAULT NULL,
   `pengguna` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `tb_kategori`
 --
 
 INSERT INTO `tb_kategori` (`kode_kategori`, `nama_kategori`, `tgl_input`, `pengguna`) VALUES
-('K001', 'Baju Dewasa Laki-laki', '2022-09-15', 1),
-('K002', 'Baju Dewasa Perempuan', '2022-09-15', 1),
-('K003', 'Baju Anak Laki-laki', '2022-09-15', 1),
-('K004', 'Baju Anak Perempuan', '2022-09-15', 1),
-('K005', 'Topi Dewasa', '2022-09-15', 1),
-('K006', 'Produk Kebersihan', '2022-10-07', 1),
-('K007', 'testing', '2023-06-19', 3);
+('K001', 'Baju Dewasa Laki-Laki', '2023-10-03', 1),
+('K002', 'Baju Dewasa Perempuan', '2023-10-03', 1),
+('K003', 'Baju Anak Laki-Laki', '2023-10-03', 1),
+('K004', 'Baju Anak Perempuan', '2023-10-03', 1),
+('K005', 'Topi Dewasa', '2023-10-03', 1),
+('K006', 'Baju Koko Laki-Laki', '2023-10-03', 1),
+('K007', 'testing', '2023-10-03', 3);
 
 -- --------------------------------------------------------
 
@@ -90,22 +90,22 @@ INSERT INTO `tb_kategori` (`kode_kategori`, `nama_kategori`, `tgl_input`, `pengg
 
 CREATE TABLE `tb_pelanggan` (
   `kode_pelanggan` int(11) NOT NULL,
-  `nama` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `alamat` text COLLATE utf8mb4_general_ci,
-  `telepon` varchar(15) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `email` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `nama` varchar(100) DEFAULT NULL,
+  `alamat` text,
+  `telepon` varchar(15) DEFAULT NULL,
+  `email` varchar(50) DEFAULT NULL,
   `tgl_input` date DEFAULT NULL,
   `pengguna` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `tb_pelanggan`
 --
 
 INSERT INTO `tb_pelanggan` (`kode_pelanggan`, `nama`, `alamat`, `telepon`, `email`, `tgl_input`, `pengguna`) VALUES
-(1, 'Umum', NULL, NULL, NULL, '2022-09-15', 1),
-(2, 'Budi Raharjo', 'Plumbon Cirebon', '081312121212', NULL, '2022-09-15', 3),
-(3, 'Wati', 'Plered', '084545454545', NULL, '2022-09-15', 3);
+(1, 'Umum', NULL, NULL, NULL, '2022-09-15', 3),
+(2, 'Budi Rahajo', 'Plumbon Cirebon', '81312121212', NULL, '2022-09-15', 3),
+(3, 'Wati', 'Plered', '84545454545', NULL, '2022-09-15', 3);
 
 -- --------------------------------------------------------
 
@@ -116,17 +116,17 @@ INSERT INTO `tb_pelanggan` (`kode_pelanggan`, `nama`, `alamat`, `telepon`, `emai
 CREATE TABLE `tb_pembelian_detail` (
   `id` int(11) NOT NULL,
   `tgl` date DEFAULT NULL,
-  `kode_barang` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `kode_barang` varchar(50) DEFAULT NULL,
   `jumlah` int(11) DEFAULT NULL,
   `pengguna` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `tb_pembelian_detail`
 --
 
 INSERT INTO `tb_pembelian_detail` (`id`, `tgl`, `kode_barang`, `jumlah`, `pengguna`) VALUES
-(6, '2020-12-04', 'B0001', 5, 3),
+(6, '2021-12-04', 'B0001', 5, 3),
 (7, '2022-09-07', 'B0001', 20, 3);
 
 -- --------------------------------------------------------
@@ -137,14 +137,14 @@ INSERT INTO `tb_pembelian_detail` (`id`, `tgl`, `kode_barang`, `jumlah`, `penggu
 
 CREATE TABLE `tb_pengguna` (
   `id` int(11) NOT NULL,
-  `username` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `nama` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `password` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `level` varchar(20) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `foto` varchar(225) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `username` varchar(100) DEFAULT NULL,
+  `nama` varchar(100) DEFAULT NULL,
+  `password` varchar(100) DEFAULT NULL,
+  `level` varchar(20) DEFAULT NULL,
+  `foto` varchar(225) DEFAULT NULL,
   `tgl_input` date DEFAULT NULL,
   `pengguna` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `tb_pengguna`
@@ -161,7 +161,7 @@ INSERT INTO `tb_pengguna` (`id`, `username`, `nama`, `password`, `level`, `foto`
 --
 
 CREATE TABLE `tb_penjualan` (
-  `kode_penjualan` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
+  `kode_penjualan` varchar(50) NOT NULL,
   `tgl_penjualan` date DEFAULT NULL,
   `id_pelanggan` int(11) DEFAULT NULL,
   `bayar` int(11) DEFAULT NULL,
@@ -170,7 +170,7 @@ CREATE TABLE `tb_penjualan` (
   `potongan` int(11) DEFAULT NULL,
   `total_b` int(11) DEFAULT NULL,
   `pengguna` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `tb_penjualan`
@@ -189,11 +189,11 @@ INSERT INTO `tb_penjualan` (`kode_penjualan`, `tgl_penjualan`, `id_pelanggan`, `
 
 CREATE TABLE `tb_penjualan_detail` (
   `id` int(11) NOT NULL,
-  `kode_penjualan` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `kode_barang` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `kode_penjualan` varchar(50) DEFAULT NULL,
+  `kode_barang` varchar(50) DEFAULT NULL,
   `jumlah` int(11) DEFAULT NULL,
   `total` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `tb_penjualan_detail`
@@ -201,11 +201,11 @@ CREATE TABLE `tb_penjualan_detail` (
 
 INSERT INTO `tb_penjualan_detail` (`id`, `kode_penjualan`, `kode_barang`, `jumlah`, `total`) VALUES
 (78, 'PJ-00000001', 'B0001', 2, 50000),
-(79, 'PJ-00000002', 'B0008', 2, 300000),
-(80, 'PJ-00000003', 'B0001', 2, 50000),
-(81, 'PJ-00000004', 'B0002', 1, 23000),
-(82, 'PJ-00000005', 'B0001', 2, 50000),
-(83, 'PJ-00000006', 'B0002', 1, 23000);
+(79, 'PJ-00000001', 'B0008', 2, 300000),
+(80, 'PJ-00000002', 'B0001', 2, 50000),
+(81, 'PJ-00000002', 'B0002', 1, 23000),
+(82, 'PJ-00000003', 'B0001', 2, 50000),
+(83, 'PJ-00000003', 'B0002', 1, 23000);
 
 -- --------------------------------------------------------
 
@@ -415,8 +415,8 @@ ALTER TABLE `tb_penjualan`
 -- Constraints for table `tb_penjualan_detail`
 --
 ALTER TABLE `tb_penjualan_detail`
-  ADD CONSTRAINT `tb_penjualan_detail_ibfk_1` FOREIGN KEY (`kode_barang`) REFERENCES `tb_barang` (`kode_barang`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  ADD CONSTRAINT `tb_penjualan_detail_ibfk_2` FOREIGN KEY (`kode_penjualan`) REFERENCES `tb_penjualan` (`kode_penjualan`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+  ADD CONSTRAINT `tb_penjualan_detail_ibfk_1` FOREIGN KEY (`kode_barang`) REFERENCES `tb_barang` (`kode_barang`),
+  ADD CONSTRAINT `tb_penjualan_detail_ibfk_2` FOREIGN KEY (`kode_penjualan`) REFERENCES `tb_penjualan` (`kode_penjualan`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -2,10 +2,10 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost:3306
--- Generation Time: Oct 18, 2023 at 03:19 AM
--- Server version: 8.0.30
--- PHP Version: 8.1.10
+-- Host: localhost
+-- Generation Time: Oct 24, 2023 at 08:19 AM
+-- Server version: 5.7.33
+-- PHP Version: 7.4.19
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -46,15 +46,15 @@ CREATE TABLE `tb_barang` (
 --
 
 INSERT INTO `tb_barang` (`kode_barang`, `nama_barang`, `warna`, `kode_kategori`, `satuan`, `stok`, `harga_beli`, `harga_jual`, `profit`, `tgl_input`, `pengguna`) VALUES
-('B001', 'Kemeja Anak', 'Biru', 'K003', 'Pcs', 26, 18000, 27000, 9000, '2022-08-15', 1),
-('B002', 'Blazer Anak', 'Hitam', 'K004', 'Pcs', 13, 17000, 25000, 8000, '2022-08-15', 1),
-('B003', 'Rok Mono', 'Pink', 'K004', 'Pcs', 18, 20000, 26000, 6000, '2022-09-15', 1),
-('B004', 'Kerudung Anak', 'Coklat', 'K004', 'Pcs', 26, 10000, 15000, 5000, '2022-09-15', 1),
-('B005', 'Kerudung Dewasa', 'Coklat', 'K002', 'Pcs', 9, 15000, 20000, 5000, '2022-09-15', 1),
-('B006', 'Kaos Oblong', 'Putih', 'K001', 'Pcs', 11, 16000, 23000, 7000, '2022-09-15', 1),
-('B007', 'Kaos Kerah', 'Merah', 'K001', 'Pcs', 11, 20000, 25000, 5000, '2022-09-15', 1),
-('B008', 'Celana Pendek Anak', 'Biru', 'K003', 'Pcs', 11, 120000, 150000, 30000, '2022-09-15', 1),
-('B009', 'Celana Panjang Jeans', 'Biru', 'K001', 'Pcs', 26, 130000, 250000, 120000, '2022-09-15', 1);
+('B0001', 'Kemeja Anak', 'Biru', 'K003', 'Pcs', 26, 18000, 27000, 9000, '2022-08-15', 1),
+('B0002', 'Blazer Anak', 'Hitam', 'K004', 'Pcs', 13, 17000, 25000, 8000, '2022-08-15', 1),
+('B0003', 'Rok Mono', 'Pink', 'K004', 'Pcs', 18, 20000, 26000, 6000, '2022-09-15', 1),
+('B0004', 'Kerudung Anak', 'Coklat', 'K004', 'Pcs', 26, 10000, 15000, 5000, '2022-09-15', 1),
+('B0005', 'Kerudung Dewasa', 'Coklat', 'K002', 'Pcs', 9, 15000, 20000, 5000, '2022-09-15', 1),
+('B0006', 'Kaos Oblong', 'Putih', 'K001', 'Pcs', 11, 16000, 23000, 7000, '2022-09-15', 1),
+('B0007', 'Kaos Kerah', 'Merah', 'K001', 'Pcs', 11, 20000, 25000, 5000, '2022-09-15', 1),
+('B0008', 'Celana Pendek Anak', 'Biru', 'K003', 'Pcs', 11, 120000, 150000, 30000, '2022-09-15', 1),
+('B0009', 'Celana Panjang Jeans', 'Biru', 'K001', 'Pcs', 25, 130000, 250000, 120000, '2022-09-15', 1);
 
 -- --------------------------------------------------------
 
@@ -137,11 +137,11 @@ INSERT INTO `tb_pembelian_detail` (`id`, `tgl`, `kode_barang`, `jumlah`, `penggu
 
 CREATE TABLE `tb_pengguna` (
   `id` int(11) NOT NULL,
-  `nama` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
   `username` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `nama` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
   `password` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
   `level` varchar(20) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `foto` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `foto` varchar(225) COLLATE utf8mb4_general_ci DEFAULT NULL,
   `tgl_input` date DEFAULT NULL,
   `pengguna` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -150,9 +150,9 @@ CREATE TABLE `tb_pengguna` (
 -- Dumping data for table `tb_pengguna`
 --
 
-INSERT INTO `tb_pengguna` (`id`, `nama`, `username`, `password`, `level`, `foto`, `tgl_input`, `pengguna`) VALUES
+INSERT INTO `tb_pengguna` (`id`, `username`, `nama`, `password`, `level`, `foto`, `tgl_input`, `pengguna`) VALUES
 (1, 'admin', 'Rina Maelani', 'admin', 'admin', 'kartini.jpg', '2022-09-01', 1),
-(3, 'kasir', 'Candra', 'kasir', 'kasir', 'user.jpg', '2022-09-14', 1);
+(3, 'kasir', 'Candra', 'kasir', 'kasir', 'user.png', '2022-09-14', 1);
 
 -- --------------------------------------------------------
 
@@ -189,8 +189,8 @@ INSERT INTO `tb_penjualan` (`kode_penjualan`, `tgl_penjualan`, `id_pelanggan`, `
 
 CREATE TABLE `tb_penjualan_detail` (
   `id` int(11) NOT NULL,
-  `kode_penjualan` varchar(20) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `kode_bareng` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `kode_penjualan` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `kode_barang` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
   `jumlah` int(11) DEFAULT NULL,
   `total` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -199,7 +199,7 @@ CREATE TABLE `tb_penjualan_detail` (
 -- Dumping data for table `tb_penjualan_detail`
 --
 
-INSERT INTO `tb_penjualan_detail` (`id`, `kode_penjualan`, `kode_bareng`, `jumlah`, `total`) VALUES
+INSERT INTO `tb_penjualan_detail` (`id`, `kode_penjualan`, `kode_barang`, `jumlah`, `total`) VALUES
 (78, 'PJ-00000001', 'B0001', 2, 50000),
 (79, 'PJ-00000002', 'B0008', 2, 300000),
 (80, 'PJ-00000003', 'B0001', 2, 50000),
@@ -218,20 +218,46 @@ CREATE TABLE `view_3tabel` (
 ,`harga_beli` int(11)
 ,`nama_kategori` varchar(50)
 ,`stok` int(11)
-,`nama` varchar(50)
+,`nama` varchar(100)
 );
 
 -- --------------------------------------------------------
 
 --
--- Stand-in structure for view `view_barangkategori`
+-- Stand-in structure for view `view_barang_kategori`
 -- (See below for the actual view)
 --
-CREATE TABLE `view_barangkategori` (
+CREATE TABLE `view_barang_kategori` (
 `nama_barang` varchar(255)
 ,`harga_beli` int(11)
 ,`nama_kategori` varchar(50)
 ,`stok` int(11)
+);
+
+-- --------------------------------------------------------
+
+--
+-- Stand-in structure for view `view_nama_barang_kategori`
+-- (See below for the actual view)
+--
+CREATE TABLE `view_nama_barang_kategori` (
+`nama_barang` varchar(255)
+,`nama_kategori` varchar(50)
+,`nama` varchar(100)
+);
+
+-- --------------------------------------------------------
+
+--
+-- Stand-in structure for view `view_tgl_nama_jumtot`
+-- (See below for the actual view)
+--
+CREATE TABLE `view_tgl_nama_jumtot` (
+`tgl_penjualan` date
+,`nama_barang` varchar(255)
+,`nama_kategori` varchar(50)
+,`jumlah` int(11)
+,`total` int(11)
 );
 
 -- --------------------------------------------------------
@@ -246,11 +272,29 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 -- --------------------------------------------------------
 
 --
--- Structure for view `view_barangkategori`
+-- Structure for view `view_barang_kategori`
 --
-DROP TABLE IF EXISTS `view_barangkategori`;
+DROP TABLE IF EXISTS `view_barang_kategori`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `view_barangkategori`  AS SELECT `tb_barang`.`nama_barang` AS `nama_barang`, `tb_barang`.`harga_beli` AS `harga_beli`, `tb_kategori`.`nama_kategori` AS `nama_kategori`, `tb_barang`.`stok` AS `stok` FROM (`tb_barang` join `tb_kategori`) WHERE (`tb_barang`.`kode_kategori` = `tb_kategori`.`kode_kategori`) ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `view_barang_kategori`  AS SELECT `tb_barang`.`nama_barang` AS `nama_barang`, `tb_barang`.`harga_beli` AS `harga_beli`, `tb_kategori`.`nama_kategori` AS `nama_kategori`, `tb_barang`.`stok` AS `stok` FROM (`tb_barang` join `tb_kategori`) WHERE (`tb_barang`.`kode_kategori` = `tb_kategori`.`kode_kategori`) ;
+
+-- --------------------------------------------------------
+
+--
+-- Structure for view `view_nama_barang_kategori`
+--
+DROP TABLE IF EXISTS `view_nama_barang_kategori`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `view_nama_barang_kategori`  AS SELECT `tb_barang`.`nama_barang` AS `nama_barang`, `tb_kategori`.`nama_kategori` AS `nama_kategori`, `tb_pengguna`.`nama` AS `nama` FROM ((`tb_barang` join `tb_kategori`) join `tb_pengguna`) WHERE ((`tb_barang`.`pengguna` = `tb_pengguna`.`id`) AND (`tb_kategori`.`kode_kategori` = `tb_barang`.`kode_kategori`)) ;
+
+-- --------------------------------------------------------
+
+--
+-- Structure for view `view_tgl_nama_jumtot`
+--
+DROP TABLE IF EXISTS `view_tgl_nama_jumtot`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `view_tgl_nama_jumtot`  AS SELECT `tb_penjualan`.`tgl_penjualan` AS `tgl_penjualan`, `tb_barang`.`nama_barang` AS `nama_barang`, `tb_kategori`.`nama_kategori` AS `nama_kategori`, `tb_penjualan_detail`.`jumlah` AS `jumlah`, `tb_penjualan_detail`.`total` AS `total` FROM (((`tb_barang` join `tb_kategori`) join `tb_penjualan`) join `tb_penjualan_detail`) WHERE ((`tb_barang`.`kode_kategori` = `tb_kategori`.`kode_kategori`) AND (`tb_penjualan`.`kode_penjualan` = `tb_penjualan_detail`.`kode_penjualan`) AND (`tb_barang`.`kode_barang` = `tb_penjualan_detail`.`kode_barang`)) ;
 
 --
 -- Indexes for dumped tables
@@ -268,19 +312,23 @@ ALTER TABLE `tb_barang`
 -- Indexes for table `tb_kategori`
 --
 ALTER TABLE `tb_kategori`
-  ADD PRIMARY KEY (`kode_kategori`);
+  ADD PRIMARY KEY (`kode_kategori`),
+  ADD KEY `pengguna` (`pengguna`);
 
 --
 -- Indexes for table `tb_pelanggan`
 --
 ALTER TABLE `tb_pelanggan`
-  ADD PRIMARY KEY (`kode_pelanggan`);
+  ADD PRIMARY KEY (`kode_pelanggan`),
+  ADD KEY `pengguna` (`pengguna`);
 
 --
 -- Indexes for table `tb_pembelian_detail`
 --
 ALTER TABLE `tb_pembelian_detail`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `kode_barang` (`kode_barang`),
+  ADD KEY `pengguna` (`pengguna`);
 
 --
 -- Indexes for table `tb_pengguna`
@@ -292,13 +340,17 @@ ALTER TABLE `tb_pengguna`
 -- Indexes for table `tb_penjualan`
 --
 ALTER TABLE `tb_penjualan`
-  ADD PRIMARY KEY (`kode_penjualan`);
+  ADD PRIMARY KEY (`kode_penjualan`),
+  ADD KEY `id_pelanggan` (`id_pelanggan`),
+  ADD KEY `pengguna` (`pengguna`);
 
 --
 -- Indexes for table `tb_penjualan_detail`
 --
 ALTER TABLE `tb_penjualan_detail`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `kode_barang` (`kode_barang`),
+  ADD KEY `kode_penjualan` (`kode_penjualan`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -332,6 +384,39 @@ ALTER TABLE `tb_penjualan_detail`
 ALTER TABLE `tb_barang`
   ADD CONSTRAINT `fkbarang1` FOREIGN KEY (`kode_kategori`) REFERENCES `tb_kategori` (`kode_kategori`),
   ADD CONSTRAINT `tb_barang_ibfk_1` FOREIGN KEY (`pengguna`) REFERENCES `tb_pengguna` (`id`);
+
+--
+-- Constraints for table `tb_kategori`
+--
+ALTER TABLE `tb_kategori`
+  ADD CONSTRAINT `tb_kategori_ibfk_1` FOREIGN KEY (`pengguna`) REFERENCES `tb_pengguna` (`id`);
+
+--
+-- Constraints for table `tb_pelanggan`
+--
+ALTER TABLE `tb_pelanggan`
+  ADD CONSTRAINT `tb_pelanggan_ibfk_1` FOREIGN KEY (`pengguna`) REFERENCES `tb_pengguna` (`id`);
+
+--
+-- Constraints for table `tb_pembelian_detail`
+--
+ALTER TABLE `tb_pembelian_detail`
+  ADD CONSTRAINT `tb_pembelian_detail_ibfk_1` FOREIGN KEY (`kode_barang`) REFERENCES `tb_barang` (`kode_barang`),
+  ADD CONSTRAINT `tb_pembelian_detail_ibfk_2` FOREIGN KEY (`pengguna`) REFERENCES `tb_pengguna` (`id`);
+
+--
+-- Constraints for table `tb_penjualan`
+--
+ALTER TABLE `tb_penjualan`
+  ADD CONSTRAINT `tb_penjualan_ibfk_1` FOREIGN KEY (`id_pelanggan`) REFERENCES `tb_pelanggan` (`kode_pelanggan`),
+  ADD CONSTRAINT `tb_penjualan_ibfk_2` FOREIGN KEY (`pengguna`) REFERENCES `tb_pengguna` (`id`);
+
+--
+-- Constraints for table `tb_penjualan_detail`
+--
+ALTER TABLE `tb_penjualan_detail`
+  ADD CONSTRAINT `tb_penjualan_detail_ibfk_1` FOREIGN KEY (`kode_barang`) REFERENCES `tb_barang` (`kode_barang`),
+  ADD CONSTRAINT `tb_penjualan_detail_ibfk_2` FOREIGN KEY (`kode_penjualan`) REFERENCES `tb_penjualan` (`kode_penjualan`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

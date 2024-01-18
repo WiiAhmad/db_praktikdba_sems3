@@ -1,0 +1,354 @@
+-- Table 1: RoomTypes
+CREATE TABLE RoomTypes (
+    RoomTypeID INT PRIMARY KEY,
+    Type VARCHAR(255),
+    Description TEXT
+);
+
+-- Table 2: Rooms
+CREATE TABLE Rooms (
+    RoomID INT PRIMARY KEY,
+    RoomNumber INT,
+    RoomTypeID INT,
+    Status VARCHAR(50),
+    FOREIGN KEY (RoomTypeID) REFERENCES RoomTypes(RoomTypeID)
+);
+
+-- Table 3: Guests
+CREATE TABLE Guests (
+    GuestID INT PRIMARY KEY,
+    FirstName VARCHAR(255),
+    LastName VARCHAR(255),
+    Email VARCHAR(255),
+    ContactNumber VARCHAR(20)
+);
+
+-- Table 4: Reservations
+CREATE TABLE Reservations (
+    ReservationID INT PRIMARY KEY,
+    GuestID INT,
+    RoomID INT,
+    CheckInDate DATE,
+    CheckOutDate DATE,
+    TotalCost DECIMAL(10, 2),
+    FOREIGN KEY (GuestID) REFERENCES Guests(GuestID),
+    FOREIGN KEY (RoomID) REFERENCES Rooms(RoomID)
+);
+
+-- Table 5: Billing
+CREATE TABLE Billing (
+    BillingID INT PRIMARY KEY,
+    ReservationID INT,
+    TotalAmount DECIMAL(10, 2),
+    PaymentStatus VARCHAR(50),
+    FOREIGN KEY (ReservationID) REFERENCES Reservations(ReservationID)
+);
+
+-- Table 6: Services
+CREATE TABLE Services (
+    ServiceID INT PRIMARY KEY,
+    Name VARCHAR(255),
+    Description TEXT,
+    Cost DECIMAL(10, 2)
+);
+
+-- Table 7: RoomServices
+CREATE TABLE RoomServices (
+    RoomServiceID INT PRIMARY KEY,
+    ReservationID INT,
+    ServiceID INT,
+    Quantity INT,
+    TotalCost DECIMAL(10, 2),
+    FOREIGN KEY (ReservationID) REFERENCES Reservations(ReservationID),
+    FOREIGN KEY (ServiceID) REFERENCES Services(ServiceID)
+);
+
+-- Table 8: Feedback
+CREATE TABLE Feedback (
+    FeedbackID INT PRIMARY KEY,
+    ReservationID INT,
+    Rating INT,
+    Comments TEXT,
+    FOREIGN KEY (ReservationID) REFERENCES Reservations(ReservationID)
+);
+
+-- Table 9: SpecialRequests
+CREATE TABLE SpecialRequests (
+    RequestID INT PRIMARY KEY,
+    ReservationID INT,
+    Description TEXT,
+    Status VARCHAR(50),
+    FOREIGN KEY (ReservationID) REFERENCES Reservations(ReservationID)
+);
+
+-- Table 10: AdditionalCharges
+CREATE TABLE AdditionalCharges (
+    ChargeID INT PRIMARY KEY,
+    ReservationID INT,
+    Description TEXT,
+    Amount DECIMAL(10, 2),
+    ChargeDate DATE,
+    FOREIGN KEY (ReservationID) REFERENCES Reservations(ReservationID)
+);
+
+INSERT INTO RoomTypes (RoomTypeID, Type, Description)
+VALUES
+    (1, 'Standard', 'Basic room with essential amenities'),
+    (2, 'Deluxe', 'Upgraded room with additional features'),
+    (3, 'Suite', 'Luxurious suite with premium services');
+
+INSERT INTO RoomTypes (RoomTypeID, Type, Description)
+VALUES
+    (2, 'Double Standard', 'Standard room with two beds'),
+    (4, 'Ocean View', 'Room with a view of the ocean'),
+    (5, 'Family Suite', 'Spacious suite for families'),
+    (6, 'Executive Suite', 'Luxurious suite for business travelers'),
+    (7, 'Honeymoon Suite', 'Romantic suite for honeymooners'),
+    (8, 'Penthouse', 'Top-floor suite with panoramic views'),
+    (9, 'Accessible Room', 'Room designed for guests with disabilities');
+
+INSERT INTO Rooms (RoomID, RoomNumber, RoomTypeID, Status)
+VALUES
+    (101, 101, 1, 'Available'),
+    (102, 102, 2, 'Occupied'),
+    (103, 103, 3, 'Available');
+
+
+INSERT INTO Rooms (RoomID, RoomNumber, RoomTypeID, Status)
+VALUES
+    (104, 104, 4, 'Available'),
+    (105, 105, 5, 'Occupied'),
+    (106, 106, 6, 'Available'),
+    (107, 107, 7, 'Available'),
+    (108, 108, 8, 'Occupied'),
+    (109, 109, 9, 'Available'),
+    (110, 110, 1, 'Occupied');
+
+
+INSERT INTO Guests (GuestID, FirstName, LastName, Email, ContactNumber)
+VALUES
+    (1, 'John', 'Doe', 'john.doe@example.com', '+1234567890'),
+    (2, 'Jane', 'Smith', 'jane.smith@example.com', '+9876543210');
+
+INSERT INTO Guests (GuestID, FirstName, LastName, Email, ContactNumber)
+VALUES
+    (3, 'Alice', 'Johnson', CONCAT('alice', RAND(), '@example.com'), CONCAT('+', FLOOR(RAND() * 9000000000) + 1000000000)),
+    (4, 'Bob', 'Miller', CONCAT('bob', RAND(), '@example.com'), CONCAT('+', FLOOR(RAND() * 9000000000) + 1000000000)),
+    (5, 'Charlie', 'Brown', CONCAT('charlie', RAND(), '@example.com'), CONCAT('+', FLOOR(RAND() * 9000000000) + 1000000000)),
+    (6, 'Diana', 'Williams', CONCAT('diana', RAND(), '@example.com'), CONCAT('+', FLOOR(RAND() * 9000000000) + 1000000000)),
+    (7, 'Ethan', 'Smith', CONCAT('ethan', RAND(), '@example.com'), CONCAT('+', FLOOR(RAND() * 9000000000) + 1000000000)),
+    (8, 'Fiona', 'Davis', CONCAT('fiona', RAND(), '@example.com'), CONCAT('+', FLOOR(RAND() * 9000000000) + 1000000000)),
+    (9, 'George', 'Harrison', CONCAT('george', RAND(), '@example.com'), CONCAT('+', FLOOR(RAND() * 9000000000) + 1000000000)),
+    (10, 'Holly', 'Clark', CONCAT('holly', RAND(), '@example.com'), CONCAT('+', FLOOR(RAND() * 9000000000) + 1000000000));
+
+
+INSERT INTO Reservations (ReservationID, GuestID, RoomID, CheckInDate, CheckOutDate, TotalCost)
+VALUES
+    (1, 1, 101, '2024-02-01', '2024-02-05', 500.00),
+    (2, 2, 102, '2024-02-10', '2024-02-15', 750.00);
+
+INSERT INTO Reservations (ReservationID, GuestID, RoomID, CheckInDate, CheckOutDate, TotalCost)
+VALUES
+    (3, 3, 103, '2024-03-05', '2024-03-10', 600.00),
+    (4, 4, 104, '2024-04-15', '2024-04-20', 700.00),
+    (5, 5, 105, '2024-05-10', '2024-05-15', 550.00),
+    (6, 6, 106, '2024-06-20', '2024-06-25', 800.00),
+    (7, 7, 107, '2024-07-01', '2024-07-05', 450.00),
+    (8, 8, 108, '2024-08-12', '2024-08-17', 900.00),
+    (9, 9, 109, '2024-09-08', '2024-09-13', 700.00),
+    (10, 10, 110, '2024-10-22', '2024-10-27', 600.00);
+
+INSERT INTO Billing (BillingID, ReservationID, TotalAmount, PaymentStatus)
+VALUES
+    (1, 1, 500.00, 'Paid'),
+    (2, 2, 750.00, 'Pending');
+
+
+INSERT INTO Billing (BillingID, ReservationID, TotalAmount, PaymentStatus)
+VALUES
+    (3, 3, 600.00, 'Paid'),
+    (4, 4, 700.00, 'Pending'),
+    (5, 5, 550.00, 'Paid'),
+    (6, 6, 800.00, 'Pending'),
+    (7, 7, 450.00, 'Paid'),
+    (8, 8, 900.00, 'Pending'),
+    (9, 9, 700.00, 'Paid'),
+    (10, 10, 600.00, 'Pending');
+
+
+INSERT INTO Services (ServiceID, Name, Description, Cost)
+VALUES
+    (1, 'Breakfast', 'Delicious morning meal', 20.00),
+    (2, 'Airport Shuttle', 'Transportation to/from airport', 30.00);
+
+
+INSERT INTO Services (ServiceID, Name, Description, Cost)
+VALUES
+    (3, 'Wi-Fi Access', 'High-speed internet service', 15.00),
+    (4, 'Room Cleaning', 'Daily cleaning service', 25.00),
+    (5, 'Parking', 'Secure parking space', 10.00),
+    (6, 'Fitness Center Access', 'Access to the hotel fitness center', 20.00),
+    (7, 'Spa Package', 'Relaxing spa treatment', 50.00),
+    (8, 'Late Checkout', 'Extend checkout time', 30.00),
+    (9, 'Welcome Gift', 'Special welcome gift upon arrival', 15.00),
+    (10, 'Local Tour Guide', 'Guided tour of local attractions', 40.00);
+
+INSERT INTO RoomServices (RoomServiceID, ReservationID, ServiceID, Quantity, TotalCost)
+VALUES
+    (1, 1, 1, 2, 40.00),
+    (2, 2, 2, 1, 30.00);
+
+
+INSERT INTO RoomServices (RoomServiceID, ReservationID, ServiceID, Quantity, TotalCost)
+VALUES
+    (3, 3, 3, 1, 15.00),
+    (4, 4, 4, 2, 50.00),
+    (5, 5, 5, 1, 40.00),
+    (6, 6, 6, 3, 90.00),
+    (7, 7, 7, 1, 15.00),
+    (8, 8, 8, 2, 60.00),
+    (9, 9, 9, 1, 20.00),
+    (10, 10, 10, 2, 80.00);
+
+INSERT INTO Feedback (FeedbackID, ReservationID, Rating, Comments)
+VALUES
+    (1, 1, 4, 'Great experience!'),
+    (2, 2, 3, 'Room service could be faster.');
+
+INSERT INTO Feedback (FeedbackID, ReservationID, Rating, Comments)
+VALUES
+    (3, 3, 5, 'Excellent service and amenities!'),
+    (4, 4, 4, 'Comfortable stay, friendly staff.'),
+    (5, 5, 3, 'Average experience, could be improved.'),
+    (6, 6, 5, 'Amazing views and luxurious suite!'),
+    (7, 7, 4, 'Very clean and well-maintained hotel.'),
+    (8, 8, 2, 'Disappointed with room cleanliness.'),
+    (9, 9, 5, 'Exceptional service and attention to detail.'),
+    (10, 10, 4, 'Enjoyed the local tour guide service.');
+
+
+INSERT INTO SpecialRequests (RequestID, ReservationID, Description, Status)
+VALUES
+    (1, 1, 'Extra pillows', 'Approved'),
+    (2, 2, 'Late check-out', 'Pending');
+
+
+INSERT INTO SpecialRequests (RequestID, ReservationID, Description, Status)
+VALUES
+    (3, 3, 'Vegetarian meal request', 'Approved'),
+    (4, 4, 'Early check-in', 'Pending'),
+    (5, 5, 'Room with a view request', 'Approved'),
+    (6, 6, 'Additional bed request', 'Approved'),
+    (7, 7, 'Quiet room request', 'Pending'),
+    (8, 8, 'Special anniversary setup', 'Approved'),
+    (9, 9, 'Baby crib request', 'Approved'),
+    (10, 10, 'Wheelchair-accessible room request', 'Pending');
+
+INSERT INTO AdditionalCharges (ChargeID, ReservationID, Description, Amount, ChargeDate)
+VALUES
+    (1, 1, 'Room upgrade', 50.00, '2024-02-05'),
+    (2, 2, 'Late check-out fee', 20.00, '2024-02-15');
+
+
+INSERT INTO AdditionalCharges (ChargeID, ReservationID, Description, Amount, ChargeDate)
+VALUES
+    (3, 3, 'Minibar expenses', 30.00, '2024-03-10'),
+    (4, 4, 'Lost key replacement', 15.00, '2024-04-20'),
+    (5, 5, 'Room service charges', 25.00, '2024-05-15'),
+    (6, 6, 'Damage repair', 40.00, '2024-06-25'),
+    (7, 7, 'Valet parking fees', 10.00, '2024-07-05'),
+    (8, 8, 'Special room amenities', 50.00, '2024-08-17'),
+    (9, 9, 'Late cancellation fee', 15.00, '2024-09-13'),
+    (10, 10, 'Concierge services', 30.00, '2024-10-27');
+
+//CREATE TABLE OperationLog (
+    LogID INT PRIMARY KEY AUTO_INCREMENT,
+    TableName VARCHAR(255),
+    RecordID INT,
+    OperationType VARCHAR(10), -- CRUD operation type (CREATE, READ, UPDATE, DELETE)
+    OperationTimestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    UserID INT, -- Assuming you have a user system with user IDs
+    FOREIGN KEY (UserID) REFERENCES Users(UserID)
+//);
+
+
+CREATE TABLE ReservationLog (
+    LogID INT PRIMARY KEY AUTO_INCREMENT,
+    ReservationID INT,
+    OperationType VARCHAR(10), -- CRUD operation type (CREATE, READ, UPDATE, DELETE)
+    OperationTimestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    UserID INT, -- Assuming you have a user system with user IDs
+    FOREIGN KEY (UserID) REFERENCES Users(UserID),
+    CONSTRAINT FK_ReservationLog_Reservation
+        FOREIGN KEY (ReservationID) REFERENCES Reservations(ReservationID)
+);
+
+
+DELIMITER //
+
+CREATE TRIGGER reservation_trigger
+AFTER INSERT ON Reservations
+FOR EACH ROW
+BEGIN
+    INSERT INTO ReservationLog (ReservationID, OperationType, UserID)
+    VALUES (NEW.ReservationID, 'CREATE', @current_user); -- Assuming @current_user variable contains the current user's ID
+END;
+
+//
+
+CREATE TRIGGER reservation_update_trigger
+AFTER UPDATE ON Reservations
+FOR EACH ROW
+BEGIN
+    INSERT INTO ReservationLog (ReservationID, OperationType, UserID)
+    VALUES (NEW.ReservationID, 'UPDATE', @current_user);
+END;
+
+//
+
+CREATE TRIGGER reservation_delete_trigger
+AFTER DELETE ON Reservations
+FOR EACH ROW
+BEGIN
+    INSERT INTO ReservationLog (ReservationID, OperationType, UserID)
+    VALUES (OLD.ReservationID, 'DELETE', @current_user);
+END;
+
+//
+
+DELIMITER ;
+
+-------------------------------------------------------
+DELIMITER //
+
+CREATE TRIGGER reservation_trigger
+AFTER INSERT ON Reservations
+FOR EACH ROW
+BEGIN
+    INSERT INTO ReservationLog (ReservationID, GuestID, OperationType, UserID)
+    VALUES (NEW.ReservationID, NEW.GuestID, 'CREATE', @current_user); -- Assuming @current_user variable contains the current user's ID
+END;
+
+//
+
+CREATE TRIGGER reservation_update_trigger
+AFTER UPDATE ON Reservations
+FOR EACH ROW
+BEGIN
+    INSERT INTO ReservationLog (ReservationID, GuestID, OperationType, UserID)
+    VALUES (NEW.ReservationID, NEW.GuestID, 'UPDATE', @current_user);
+END;
+
+//
+
+CREATE TRIGGER reservation_delete_trigger
+AFTER DELETE ON Reservations
+FOR EACH ROW
+BEGIN
+    INSERT INTO ReservationLog (ReservationID, GuestID, OperationType, UserID)
+    VALUES (OLD.ReservationID, OLD.GuestID, 'DELETE', @current_user);
+END;
+
+//
+
+DELIMITER ;
